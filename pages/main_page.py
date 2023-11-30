@@ -24,7 +24,7 @@ class Main_page(Base):
 
     # Локаторы
 
-    town_button = '//a[@class="js-choosecity-close"]'
+    town_button = '//a[@class="js-choosecity-close"]' # Кнопка "Да" на всплывающем окне с подтверждением локации
     profile_button = '/html/body/div[1]/div[3]/div/div[1]/a[1]'  # Кнопка профиля
     user_name = '//*[@id="Login"]'  # Поле ввода логина
     password = '//*[@id="Password"]'  # Поле ввода пароля
@@ -76,9 +76,8 @@ class Main_page(Base):
         self.driver.get(self.main_url)
         self.driver.maximize_window()
         self.get_current_url()
-        time.sleep(3)
+        time.sleep(3) # Т.к. некоторое время кнопка некликабельна и метод wait не помогает.
         self.click_town_button()
-        time.sleep(3)
         self.click_profile_button()
         self.input_user_name("testqadst@rambler.ru")
         self.input_password("dst_testqa")

@@ -24,9 +24,7 @@ class Catalog_page(Base):
 
     catalog_button = '/html/body/div[1]/div[4]/div/a[2]'  # Кнопка каталога
     components_button = '/html/body/div[2]/div/div[2]/a[4]'  # Кнопка "комплектующие"
-    ram_button = '/html/body/div[2]/div/div[3]/div[4]/div[1]/a[4]' # Кнопка "модули памяти"
-    catalog_mountain_ski = '//*[@id="cm3"]/span'  # Локатор пункта "Лыжи горные" в левом меню каталога
-    mountain_ski = '//*[@id="cm3_sub"]/div/div/div/div[1]/div/div[1]/a[3]/p' # Локатор пункта "Лыжи горные" во всплывающем окне для перехода к фильтрам.
+    ram_button = '/html/body/div[3]/div[2]/div[1]/div/div[4]/a' # Кнопка "модули памяти"
 
 
     # Геттеры
@@ -59,6 +57,7 @@ class Catalog_page(Base):
     def ram_in_catalog(self):
         self.get_current_url()
         self.click_catalog_button()
+        time.sleep(1)
         self.click_components_button()
         self.click_ram_button()
         print("Click mountain ski in left catalog")

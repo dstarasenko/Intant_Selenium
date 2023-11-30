@@ -23,7 +23,6 @@ class Filters_page(Base):
 
     f_price_from = '//*[@id="minCost"]' # Поле ввода нижнего порога стоимости
     f_price_to = '//*[@id="maxCost"]' # Поле ввода верхнего порога стоимости
-    brand_button = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[4]/div[1]/div' # Кнопка раскрытия выпадающего списка с брендами
     f_brand = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[4]/div[2]/div[3]/label[1]/span[1]'    # Локатор бренда Corsair
     type_button = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[5]/div[1]/div' # Кнопка раскрытия выпадающего списка с типами RAM
     f_type = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[5]/div[2]/div[2]/label/span[2]'   # Локатор пункта фильтра DDR4
@@ -31,8 +30,8 @@ class Filters_page(Base):
     f_volume = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[6]/div[2]/div[4]/label'  # Локатор пункта фильтра 16гб
     quantity_button = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[7]/div[1]/div'  # Кнопка раскрытия выпадающего списка с кол-вом модулей в комплекте
     f_quantity = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[7]/div[2]/div[2]/label'  # Локатор пункта фильтра 2
-    frequency_button = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[7]/div[1]/div'  # Кнопка раскрытия выпадающего списка с частотой RAM
-    f_frequency = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[9]/div[2]/div[9]/label/span[1]'  # Локатор пункта фильтра 3200
+    frequency_button = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[9]/div[1]/div'  # Кнопка раскрытия выпадающего списка с частотой RAM
+    f_frequency = '/html/body/div[3]/div/div[2]/div/div[3]/div[1]/div/div/div[9]/div[2]/div[9]/label/span[2]'  # Локатор пункта фильтра 3200
     show_button = '//*[@id="applyFilter"]' # Кнопка "Показать", применяем фильтры
 
     # Геттеры
@@ -42,9 +41,6 @@ class Filters_page(Base):
 
     def get_f_price_to(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.f_price_to)))
-
-    def get_brand_button(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.brand_button)))
 
     def get_f_brand(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.f_brand)))
@@ -86,10 +82,6 @@ class Filters_page(Base):
     def input_price_to(self, price_to):
         self.get_f_price_to().send_keys(price_to)
         print(f"Input price from {price_to}")
-
-    def click_brand_button(self):
-        self.get_brand_button().click()
-        print(f"Click brand button")
 
     def select_brand(self):
         self.get_f_brand().click()
@@ -134,21 +126,21 @@ class Filters_page(Base):
 
     # Методы
 
-    def mountain_ski_filters(self):
+    def add_filters(self):
         self.get_current_url()
-        self.input_price_from("70000")
-        self.input_price_to("80000")
-        self.click_brand_button()
+        self.input_price_from("5000")
+        self.input_price_to("9000")
         self.select_brand()
         self.click_type_button()
         self.select_type()
         self.click_volume_button()
         self.select_volume()
+        self.driver.execute_script('window.scrollTo(0,400)')  # Скролл, чтобы увидеть настроенные фильтры
         self.click_quantity_button()
         self.select_quantity()
         self.click_frequency_button()
         self.select_frequency()
-        self.driver.execute_script('window.scrollTo(0,600)') # Скролл, чтобы увидеть настроенные фильтры
+        self.driver.execute_script('window.scrollTo(0,1000)') # Скролл, чтобы увидеть настроенные фильтры
         time.sleep(1)
         self.click_show_button()
 

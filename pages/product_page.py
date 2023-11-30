@@ -23,14 +23,10 @@ class Product_page(Base):
 
     # Локаторы
 
-    select_product_button = '//*[@id="sgoodscontainer"]/div/div[1]/a/span[2]' # Локатор Corsair 2x8ГБ DDR4 SDRAM "Vengeance LPX" CMK16GX4M2B3200C16W
+    select_product_button = '//*[@id="sgoodscontainer"]/div/div[1]/a' # Локатор Corsair 2x8ГБ DDR4 SDRAM "Vengeance LPX" CMK16GX4M2B3200C16W
     add_to_cart_button = '/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/div[2]/a/label' # Локатор добавления товара в корзину
     go_to_cart_button = '/html/body/div[1]/div[4]/div/div/div[2]/a[5]/div[2]' # Локатор кнопки перехода в корзину
-    select_product_button = '//*[@id="obj2178608"]/span[2]/a[1]/span/font' # Локатор горных лыж Rossignol BLACKOPS SENDER SQUAD, которые появляются после фильтров
-    add_to_cart_button = '/html/body/div[4]/div[3]/div[6]/div[1]/div[2]/div[3]/div[1]/a[1]' # Локатор добавления товара в корзину
     add_to_cart_repeat_button = '/html/body/div[4]/div[6]/div[11]/div[2]/div[2]/form/table[2]/tbody/tr/td[3]/div/div/input' # Локатор подтверждение добавления товара в корзину на всплывающем окне
-    go_to_cart_button = '/html/body/div[4]/div[9]/div[5]/div[2]/div[3]/div[2]/div[2]/div[2]/a[2]' # Локатор кнопки перехода в корзину
-
 
 
     # Геттеры
@@ -65,6 +61,7 @@ class Product_page(Base):
 
     def add_product_to_cart(self):
         self.get_current_url()
+        self.assert_url("https://e.intant.ru/catalog/hardware/memory?flt=Yzo1MDAwOzkwMDAsZjowXzQzOzFfMjczNjM7MV8zMDIwOzFfMzA1NDsxXzI5MzE1")
         self.click_select_product_button()
         self.click_add_to_cart_button()
         self.click_go_to_cart_button()

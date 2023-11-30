@@ -22,9 +22,8 @@ def test_select_products(set_up):
     except Exception as e:
         print("Authorization failed!")
         b = Base(driver)
-        b.get_screenshot("fail_authorization")
+        b.get_screenshot("fail_auth")
         sys.exit()
-
 
     # Переходим в каталог, выбираем раздел "Модули памяти"
     try:
@@ -33,18 +32,18 @@ def test_select_products(set_up):
     except Exception as e:
         print("Open catalog failed!")
         b = Base(driver)
-        b.get_screenshot("open_catalog_fail")
+        b.get_screenshot("fail_open_catalog")
         sys.exit()
 
     # Активируем фильтры
     try:
         fp = Filters_page(driver)
-        fp.mountain_ski_filters()
+        fp.add_filters()
         time.sleep(1)
     except Exception as e:
         print("Filter settings failed")
         b = Base(driver)
-        b.get_screenshot("filter_settings_fail")
+        b.get_screenshot("fail_filter")
         sys.exit()
 
 
@@ -54,25 +53,13 @@ def test_select_products(set_up):
         pp.add_product_to_cart()
         time.sleep(1)
     except Exception as e:
-        print("Select skies failed")
+        print("Select RAM failed")
         b = Base(driver)
-        b.get_screenshot("select_RAM_fail")
+        b.get_screenshot("fail_select_RAM")
         sys.exit()
 
 
-    # Выбираем лыжи, добавляем в корзину
-    try:
-        pp = Product_page(driver)
-        pp.add_product_to_cart()
-        time.sleep(1)
-    except Exception as e:
-        print("Select skies failed")
-        b = Base(driver)
-        b.get_screenshot("select_skies_fail")
-        sys.exit()
-
-
-    # Начало оформления заказа: выбираем город доставки и кликаем "оформить"
+    # Начало оформления заказа
     try:
         cp = Cart_page(driver)
         cp.checkout()
@@ -80,7 +67,7 @@ def test_select_products(set_up):
     except:
         print("Start checking failed")
         b = Base(driver)
-        b.get_screenshot("start_checking_fail")
+        b.get_screenshot("fail_placing_order")
         sys.exit()
 
     # Заполнение данных получателя заказа
@@ -91,11 +78,14 @@ def test_select_products(set_up):
     except Exception as e:
         print("Entering delivery data failed")
         b = Base(driver)
-        b.get_screenshot("delivery_data_fail")
+        b.get_screenshot("fail_delivery_data")
         sys.exit()
 
     """
         На этом стоп, т.к. скорее всего, дальнейшие действия подтвердят заказ и запустят процесс оплаты.
     """
+    b = Base(driver)
+    b.get_screenshot("finish")
+
 
     time.sleep(5)
