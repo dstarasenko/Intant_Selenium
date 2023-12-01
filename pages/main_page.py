@@ -1,5 +1,6 @@
 import time
 
+from utilities.logger import Logger
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -73,6 +74,7 @@ class Main_page(Base):
     # Методы
 
     def authorization(self):
+        Logger.add_start_step(method='authorization')
         self.driver.get(self.main_url)
         self.driver.maximize_window()
         self.get_current_url()
@@ -82,3 +84,4 @@ class Main_page(Base):
         self.input_user_name("testqadst@rambler.ru")
         self.input_password("dst_testqa")
         self.click_login_button()
+        Logger.add_end_step(url=self.driver.current_url, method='authorization')

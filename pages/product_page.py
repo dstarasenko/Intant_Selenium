@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 """ 
     Страница каталога горных лыж после фильтров.
@@ -60,11 +61,13 @@ class Product_page(Base):
     # Методы
 
     def add_product_to_cart(self):
+        Logger.add_start_step(method='add_product_to_cart')
         self.get_current_url()
         self.assert_url("https://e.intant.ru/catalog/hardware/memory?flt=Yzo1MDAwOzkwMDAsZjowXzQzOzFfMjczNjM7MV8zMDIwOzFfMzA1NDsxXzI5MzE1")
         self.click_select_product_button()
         self.click_add_to_cart_button()
         self.click_go_to_cart_button()
+        Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
 
 
 

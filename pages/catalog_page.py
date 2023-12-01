@@ -5,6 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 """ 
     Главная страница магазина.
@@ -55,12 +56,13 @@ class Catalog_page(Base):
     # Методы
 
     def ram_in_catalog(self):
+        Logger.add_start_step(method='ram_in_catalog')
         self.get_current_url()
         self.click_catalog_button()
         time.sleep(1)
         self.click_components_button()
         self.click_ram_button()
-        print("Click mountain ski in left catalog")
+        Logger.add_end_step(url=self.driver.current_url, method='ram_in_catalog')
 
 
 

@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 """ 
     Страница корзины.
@@ -30,6 +31,8 @@ class Cart_page(Base):
     check_name = '/html/body/div[3]/div[2]/div/div/div[1]/div[2]/a[1]/span[2]/span[1]' # Для проверки наименования товара в корзине
     check_price = '/html/body/div[3]/div[2]/div/div/div[2]/span[2]' # Для проверки стоимости товара в корзине
 
+    price_of_one = '/html/body/div[3]/div[2]/div/div/div[1]/div[2]/a[1]/span[2]/span[2]' # Стоимость одной единицы товара
+
 
     # Геттеры
 
@@ -45,6 +48,9 @@ class Cart_page(Base):
 
     def get_check_price(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.check_price)))
+
+    def get_price_of_one(self):
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.price_of_one)))
 
 
 
@@ -63,13 +69,18 @@ class Cart_page(Base):
     # Методы
 
     def checkout(self):
+        Logger.add_start_step(method='checkout')
         self.get_current_url()
         self.driver.refresh()  # Т.к. кнопка "Оформить заказ" может становится не активной.
         self.input_select_quantity_field("3")
         time.sleep(3) # Потому что стоимость обновляется в течении 1-2сек
         self.assert_word(self.get_check_name(), 'Модуль памяти Corsair 2x8ГБ DDR4 SDRAM "Vengeance LPX" CMK16GX4M2B3200C16W')
-        self.assert_word(self.get_check_price(), '22 017 ₽')
+
+        price = int(self.get_price_of_one().text[:-2].replace(" ", '')) * 3 # Берем цену одной единицы товара и умножаем на 3
+        self.assert_price(self.get_check_price(), price)
+
         self.click_checkout_button()
+        Logger.add_end_step(url=self.driver.current_url, method='checkout')
 
 
 

@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 """ 
     Страница каталога оперативной памяти.
@@ -127,6 +128,7 @@ class Filters_page(Base):
     # Методы
 
     def add_filters(self):
+        Logger.add_start_step(method='add_filters')
         self.get_current_url()
         self.input_price_from("5000")
         self.input_price_to("9000")
@@ -143,6 +145,7 @@ class Filters_page(Base):
         self.driver.execute_script('window.scrollTo(0,1000)') # Скролл, чтобы увидеть настроенные фильтры
         time.sleep(1)
         self.click_show_button()
+        Logger.add_end_step(url=self.driver.current_url, method='add_filters')
 
 
 

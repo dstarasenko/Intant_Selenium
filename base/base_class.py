@@ -12,17 +12,22 @@ class Base():
         print(f"Current url {get_url}")
 
 
-    """ Метод проверки наличия слова на странице """
-    def assert_word(self, word, result):
-        value_word = word.text
-        assert value_word == result
-        print("Good value word")
+    """ Метод проверки соответствия наименования товара """
+    def assert_word(self, received, expected):
+        value_received = received.text
+        assert value_received == expected
+        print("Good value string")
+
+    """ Метод проверки соответствия стоимости """
+    def assert_price(self, received, expected):
+        value_price = received.text[:-2].replace(" ", "")
+        assert int(value_price) == expected
+        print("Good value price")
 
 
     """ Создание скриншота """
     def get_screenshot(self, screen_name):
         now_date = datetime.datetime.now(datetime.UTC).strftime("%Y.%m.%d.%H.%M.%S")
-        #self.driver.save_screenshot(f"C:\\Users\\dstar\\PycharmProjects\\Sel_proj_TrialSport\\screenshots\\{screen_name}_{now_date}.png")
         self.driver.save_screenshot(f"screenshots\\{screen_name}_{now_date}.png")
 
 

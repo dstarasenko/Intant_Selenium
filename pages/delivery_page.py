@@ -6,6 +6,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 
 from base.base_class import Base
+from utilities.logger import Logger
+
 """
     Страница заполнения данных получателя заказа
 """
@@ -125,6 +127,7 @@ class Delivery_page(Base):
     # Методы
 
     def entering_delivery_data(self):
+        Logger.add_start_step(method='entering_delivery_data')
         self.get_current_url()
         self.input_telephone_field("+7 (456) 456-45-66")
         self.input_fullname_field("Иванов Иван Иванович")
@@ -140,6 +143,7 @@ class Delivery_page(Base):
 
         # Так как заказ будет отправлен, клик по кнопке "отправить заказ" отключен
         #self.click_continue_button()
+        Logger.add_end_step(url=self.driver.current_url, method='entering_delivery_data')
 
 
 
