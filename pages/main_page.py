@@ -1,4 +1,6 @@
 import time
+import allure
+
 
 from utilities.logger import Logger
 from selenium.webdriver.support import expected_conditions as EC
@@ -15,8 +17,8 @@ from base.base_class import Base
     Пароль - dst_testqa
 """
 
-
-class Main_page(Base):
+@allure.epic(" Главная страница магазина ")
+class MainPage(Base):
     main_url = "https://e.intant.ru/"  # Главная страница магазина
 
     def __init__(self, driver):
@@ -74,14 +76,15 @@ class Main_page(Base):
     # Методы
 
     def authorization(self):
-        Logger.add_start_step(method='authorization')
-        self.driver.get(self.main_url)
-        self.driver.maximize_window()
-        self.get_current_url()
-        time.sleep(3) # Т.к. некоторое время кнопка некликабельна и метод wait не помогает.
-        self.click_town_button()
-        self.click_profile_button()
-        self.input_user_name("testqadst@rambler.ru")
-        self.input_password("dst_testqa")
-        self.click_login_button()
-        Logger.add_end_step(url=self.driver.current_url, method='authorization')
+        with allure.step("Authorization"):
+            Logger.add_start_step(method='authorization')
+            self.driver.get(self.main_url)
+            self.driver.maximize_window()
+            self.get_current_url()
+            time.sleep(3) # Т.к. некоторое время кнопка некликабельна и метод wait не помогает.
+            self.click_town_button()
+            self.click_profile_button()
+            self.input_user_name("testqadst@rambler.ru")
+            self.input_password("dst_testqa")
+            self.click_login_button()
+            Logger.add_end_step(url=self.driver.current_url, method='authorization')

@@ -1,4 +1,6 @@
 import time
+import allure
+
 
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,8 +15,8 @@ from utilities.logger import Logger
     Настраиваем фильтры.
 """
 
-
-class Filters_page(Base):
+@allure.epic(" Страница каталога ОЗУ, где нужно проставить фильтры ")
+class FiltersPage(Base):
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -128,24 +130,25 @@ class Filters_page(Base):
     # Методы
 
     def add_filters(self):
-        Logger.add_start_step(method='add_filters')
-        self.get_current_url()
-        self.input_price_from("5000")
-        self.input_price_to("9000")
-        self.select_brand()
-        self.click_type_button()
-        self.select_type()
-        self.click_volume_button()
-        self.select_volume()
-        self.driver.execute_script('window.scrollTo(0,400)')  # Скролл, чтобы увидеть настроенные фильтры
-        self.click_quantity_button()
-        self.select_quantity()
-        self.click_frequency_button()
-        self.select_frequency()
-        self.driver.execute_script('window.scrollTo(0,1000)') # Скролл, чтобы увидеть настроенные фильтры
-        time.sleep(1)
-        self.click_show_button()
-        Logger.add_end_step(url=self.driver.current_url, method='add_filters')
+        with allure.step("Add filters"):
+            Logger.add_start_step(method='add_filters')
+            self.get_current_url()
+            self.input_price_from("5000")
+            self.input_price_to("9000")
+            self.select_brand()
+            self.click_type_button()
+            self.select_type()
+            self.click_volume_button()
+            self.select_volume()
+            self.driver.execute_script('window.scrollTo(0,400)')  # Скролл, чтобы увидеть настроенные фильтры
+            self.click_quantity_button()
+            self.select_quantity()
+            self.click_frequency_button()
+            self.select_frequency()
+            self.driver.execute_script('window.scrollTo(0,1000)') # Скролл, чтобы увидеть настроенные фильтры
+            time.sleep(1)
+            self.click_show_button()
+            Logger.add_end_step(url=self.driver.current_url, method='add_filters')
 
 
 

@@ -1,4 +1,6 @@
 import time
+import allure
+
 
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
@@ -15,8 +17,8 @@ from utilities.logger import Logger
     Переходим в корзину
 """
 
-
-class Product_page(Base):
+@allure.epic(" Страница продукта Corsair 2x8ГБ DDR4 SDRAM 'Vengeance LPX' CMK16GX4M2B3200C16W ")
+class ProductPage(Base):
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -61,13 +63,14 @@ class Product_page(Base):
     # Методы
 
     def add_product_to_cart(self):
-        Logger.add_start_step(method='add_product_to_cart')
-        self.get_current_url()
-        self.assert_url("https://e.intant.ru/catalog/hardware/memory?flt=Yzo1MDAwOzkwMDAsZjowXzQzOzFfMjczNjM7MV8zMDIwOzFfMzA1NDsxXzI5MzE1")
-        self.click_select_product_button()
-        self.click_add_to_cart_button()
-        self.click_go_to_cart_button()
-        Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
+        with allure.step("Add product to cart"):
+            Logger.add_start_step(method='add_product_to_cart')
+            self.get_current_url()
+            self.assert_url("https://e.intant.ru/catalog/hardware/memory?flt=Yzo1MDAwOzkwMDAsZjowXzQzOzFfMjczNjM7MV8zMDIwOzFfMzA1NDsxXzI5MzE1")
+            self.click_select_product_button()
+            self.click_add_to_cart_button()
+            self.click_go_to_cart_button()
+            Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
 
 
 

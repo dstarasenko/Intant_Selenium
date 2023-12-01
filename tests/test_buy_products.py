@@ -1,22 +1,25 @@
 import time
-from selenium import webdriver
-from pages.catalog_page import Catalog_page
-from pages.main_page import Main_page
-from pages.filters_page import Filters_page
-from pages.product_page import Product_page
-from pages.cart_page import Cart_page
-from pages.delivery_page import Delivery_page
-from base.base_class import Base
+import allure
 import sys
 
+from selenium import webdriver
+from pages.catalog_page import CatalogPage
+from pages.main_page import MainPage
+from pages.filters_page import FiltersPage
+from pages.product_page import ProductPage
+from pages.cart_page import CartPage
+from pages.delivery_page import DeliveryPage
+from base.base_class import Base
 
 
-def test_select_products(set_up):
+
+@allure.description("Test buy product")
+def test_buy_product(set_up):
     driver = webdriver.Chrome()
 
     # Авторизация на сайте
     try:
-        mp = Main_page(driver)
+        mp = MainPage(driver)
         mp.authorization()
         time.sleep(1)
     except Exception as e:
@@ -27,7 +30,7 @@ def test_select_products(set_up):
 
     # Переходим в каталог, выбираем раздел "Модули памяти"
     try:
-        cat_p = Catalog_page(driver)
+        cat_p = CatalogPage(driver)
         cat_p.ram_in_catalog()
     except Exception as e:
         print("Open catalog failed!")
@@ -37,7 +40,7 @@ def test_select_products(set_up):
 
     # Активируем фильтры
     try:
-        fp = Filters_page(driver)
+        fp = FiltersPage(driver)
         fp.add_filters()
         time.sleep(1)
     except Exception as e:
@@ -49,7 +52,7 @@ def test_select_products(set_up):
 
     # Выбираем оперативку, добавляем в корзину
     try:
-        pp = Product_page(driver)
+        pp = ProductPage(driver)
         pp.add_product_to_cart()
         time.sleep(1)
     except Exception as e:
@@ -61,7 +64,7 @@ def test_select_products(set_up):
 
     # Начало оформления заказа
     try:
-        cp = Cart_page(driver)
+        cp = CartPage(driver)
         cp.checkout()
         time.sleep(1)
     except:
@@ -72,7 +75,7 @@ def test_select_products(set_up):
 
     # Заполнение данных получателя заказа
     try:
-        dp = Delivery_page(driver)
+        dp = DeliveryPage(driver)
         dp.entering_delivery_data()
         time.sleep(1)
     except Exception as e:

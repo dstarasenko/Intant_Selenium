@@ -1,4 +1,5 @@
 import time
+import allure
 
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -15,15 +16,15 @@ from utilities.logger import Logger
     и прожать кнопку "оформить"
 """
 
-
-class Cart_page(Base):
+@allure.epic(" Страница корзины ")
+class CartPage(Base):
 
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
 
     # Кол-во единиц одного товара, на котором делаем тесты
-    pieces = 10
+    pieces = 3
 
     # Локаторы
 
@@ -73,16 +74,17 @@ class Cart_page(Base):
     # Методы
 
     def checkout(self):
-        Logger.add_start_step(method='checkout')
-        self.get_current_url()
-        self.driver.refresh()  # Т.к. кнопка "Оформить заказ" может становится не активной.
-        self.input_select_quantity_field(str(self.get_pieces()))
-        time.sleep(3) # Потому что стоимость обновляется в течении 1-2сек
-        self.assert_word(self.get_check_name(), 'Модуль памяти Corsair 2x8ГБ DDR4 SDRAM "Vengeance LPX" CMK16GX4M2B3200C16W')
-        price = int(self.get_price_of_one().text[:-2].replace(" ", '')) * self.get_pieces() # Берем цену одной единицы товара и умножаем на кол-во из переменной pieces
-        self.assert_price(self.get_check_price(), price)
-        self.click_checkout_button()
-        Logger.add_end_step(url=self.driver.current_url, method='checkout')
+        with allure.step("Checkout"):
+            Logger.add_start_step(method='checkout')
+            self.get_current_url()
+            self.driver.refresh()  # Т.к. кнопка "Оформить заказ" может становится не активной.
+            self.input_select_quantity_field(str(self.get_pieces()))
+            time.sleep(3) # Потому что стоимость обновляется в течении 1-2сек
+            self.assert_word(self.get_check_name(), 'Модуль памяти Corsair 2x8ГБ DDR4 SDRAM "Vengeance LPX" CMK16GX4M2B3200C16W')
+            price = int(self.get_price_of_one().text[:-2].replace(" ", '')) * self.get_pieces() # Берем цену одной единицы товара и умножаем на кол-во из переменной pieces
+            self.assert_price(self.get_check_price(), price)
+            self.click_checkout_button()
+            Logger.add_end_step(url=self.driver.current_url, method='checkout')
 
 
 

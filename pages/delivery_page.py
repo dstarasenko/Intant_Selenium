@@ -1,4 +1,6 @@
 import time
+import allure
+
 
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,7 +14,8 @@ from utilities.logger import Logger
     Страница заполнения данных получателя заказа
 """
 
-class Delivery_page(Base):
+@allure.epic(" Страница с данными получателя заказа ")
+class DeliveryPage(Base):
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -127,23 +130,24 @@ class Delivery_page(Base):
     # Методы
 
     def entering_delivery_data(self):
-        Logger.add_start_step(method='entering_delivery_data')
-        self.get_current_url()
-        self.input_telephone_field("+7 (456) 456-45-66")
-        self.input_fullname_field("Иванов Иван Иванович")
-        self.click_delivery_method_checkbox()
-        self.click_town_button()
-        self.click_select_town_button()
-        self.input_address_field("Северск, ул. Маяковского, д.6, кв.23")
-        self.click_where_button()
-        self.click_postomat_button()
-        self.click_card_checkbox()
-        self.input_comment_field("test")
-        #self.click_agree_checkbox() # будет отжат этой командой, если пользователь залогинен в профиль
+        with allure.step("Entering delivery data"):
+            Logger.add_start_step(method='entering_delivery_data')
+            self.get_current_url()
+            self.input_telephone_field("+7 (456) 456-45-66")
+            self.input_fullname_field("Иванов Иван Иванович")
+            self.click_delivery_method_checkbox()
+            self.click_town_button()
+            self.click_select_town_button()
+            self.input_address_field("Северск, ул. Маяковского, д.6, кв.23")
+            self.click_where_button()
+            self.click_postomat_button()
+            self.click_card_checkbox()
+            self.input_comment_field("test")
+            #self.click_agree_checkbox() # будет отжат этой командой, если пользователь залогинен в профиль
 
-        # Так как заказ будет отправлен, клик по кнопке "отправить заказ" отключен
-        #self.click_continue_button()
-        Logger.add_end_step(url=self.driver.current_url, method='entering_delivery_data')
+            # Так как заказ будет отправлен, клик по кнопке "отправить заказ" отключен
+            #self.click_continue_button()
+            Logger.add_end_step(url=self.driver.current_url, method='entering_delivery_data')
 
 
 

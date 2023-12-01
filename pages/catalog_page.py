@@ -1,4 +1,5 @@
 import time
+import allure
 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -14,8 +15,8 @@ from utilities.logger import Logger
     для перехода к фильтрам.
 """
 
-
-class Catalog_page(Base):
+@allure.epic(" Страница каталога ")
+class CatalogPage(Base):
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -56,13 +57,14 @@ class Catalog_page(Base):
     # Методы
 
     def ram_in_catalog(self):
-        Logger.add_start_step(method='ram_in_catalog')
-        self.get_current_url()
-        self.click_catalog_button()
-        time.sleep(1)
-        self.click_components_button()
-        self.click_ram_button()
-        Logger.add_end_step(url=self.driver.current_url, method='ram_in_catalog')
+        with allure.step("Ram in catalog"):
+            Logger.add_start_step(method='ram_in_catalog')
+            self.get_current_url()
+            self.click_catalog_button()
+            time.sleep(1)
+            self.click_components_button()
+            self.click_ram_button()
+            Logger.add_end_step(url=self.driver.current_url, method='ram_in_catalog')
 
 
 
